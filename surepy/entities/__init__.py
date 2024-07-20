@@ -86,17 +86,3 @@ class PetActivity(PetLocationData):
 @dataclass
 class PetLocation(PetLocationData):
     pass
-
-
-@dataclass
-class PetInsideData:
-
-    profile: InsidePet
-
-    def __str__(self) -> str:
-        return self.where.name.title()
-
-
-@dataclass
-class StateInside(PetInsideData):
-    pass

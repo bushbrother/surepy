@@ -451,8 +451,8 @@ class SureAPIClient:
         # return None
         raise SurePetcareError("ERROR SETTING INSIDE PET STATE - PLEASE CHECK IMMEDIATELY!")
 
-async def get_inside_pet(self, device_id: int, tag_id: int) -> dict[str, Any] | None:
-        """Set a pet as inside only or outside"""
+async def get_inside_pet(self, device_id: int, tag_id: int) -> int | None:
+        """Get info on inside only or outside"""
         resource = DEVICE_TAG_RESOURCE.format(
             BASE_RESOURCE=BASE_RESOURCE, device_id=device_id, tag_id=tag_id
         )
@@ -465,6 +465,3 @@ async def get_inside_pet(self, device_id: int, tag_id: int) -> dict[str, Any] | 
             id = response_data.get("profile")
 
         return id
-        
-        # return None
-        raise SurePetcareError("ERROR GETTING INSIDE PET STATE - PLEASE CHECK IMMEDIATELY!")
