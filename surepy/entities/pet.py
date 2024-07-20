@@ -136,11 +136,12 @@ class Pet(SurepyEntity):
         return self.drinking.at if self.drinking else None
     
     @property
-    def profile_id(self) -> int:
+    def profile_id(self) -> StateInside:
         """State of inside only."""
         device_id = self._data.get("device_id", {}),
         tag_id = self._data.get("tag_id", {}),
-        profile=get_inside_pet(self, device_id, tag_id),
         # pylint: disable=no-member
-        return profile
+        return StateInside(
+            profile=get_inside_pet(self, device_id, tag_id),
+            )
     
