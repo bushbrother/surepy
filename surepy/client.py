@@ -462,6 +462,6 @@ async def get_inside_pet(self, device_id: int, tag_id: int) -> int | None:
                 method="GET", resource=resource, device_id=device_id
                 )
         ) and (response_data := response.get("data")):
-            id = await response_data.get("profile")
+            id = response_data.get("profile")
 
         return id
