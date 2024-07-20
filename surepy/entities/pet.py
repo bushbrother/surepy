@@ -15,7 +15,7 @@ from urllib.parse import urlparse
 from surepy.client import get_inside_pet
 from surepy.entities import PetActivity, PetLocation, StateDrinking, StateFeeding, SurepyEntity, StateInside
 from surepy.entities.states import PetState
-from surepy.enums import EntityType, FoodType, Location, InsidePet
+from surepy.enums import EntityType, FoodType, Location
 
 
 class Pet(SurepyEntity):
@@ -136,12 +136,11 @@ class Pet(SurepyEntity):
         return self.drinking.at if self.drinking else None
     
     @property
-    def profile_id(self) -> StateInside:
+    def profile_id(self) -> int:
         """State of inside only."""
         device_id = self._data.get("device_id", {}),
         tag_id = self._data.get("tag_id", {}),
+        profile=get_inside_pet(self, device_id, tag_id),
         # pylint: disable=no-member
-        return StateInside(
-            profile=get_inside_pet(self, device_id, tag_id)
-        )
+        return profile
     
