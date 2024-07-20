@@ -135,11 +135,6 @@ class Pet(SurepyEntity):
         return self.drinking.at if self.drinking else None
 
     @property
-    def inside_only(self) -> bool:
-        """State of inside only."""
-        return bool(self.profile_id.profile == InsidePet.INSIDE_ONLY)
-    
-    @property
     def profile_id(self) -> StateInside:
         """State of inside only."""
         profile = self._data.get("profile", {})
