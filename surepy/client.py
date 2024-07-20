@@ -428,3 +428,25 @@ class SureAPIClient:
 
         if response := await self.call(method="DELETE", resource=resource):
             return response
+        
+    async def set_inside_pet(self, device_id: int, tag_id: int, profile_id: int) -> dict[str, Any] | None:
+        """Set a pet as inside only or outside"""
+        resource = DEVICE_TAG_RESOURCE.format(
+            BASE_RESOURCE=BASE_RESOURCE, device_id=device_id, tag_id=tag_id
+        )
+        data = {"profile": profile_id}
+    
+        if (
+            response := await self.call(
+                method="PUT", resource=resource, device_id=device_id, data=data
+                )
+        ) and (response_data := response.get("data")):
+            desired_state = data.get("profile")
+            state = response_data.get("profile")
+
+            # check if the state is correctly updated
+            if state == desired_state:
+                return response
+
+        # return None
+        raise SurePetcareError("ERROR SETTING INSIDE PET STATE - PLEASE CHECK IMMEDIATELY!")
