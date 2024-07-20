@@ -47,7 +47,7 @@ from .const import (
     SUREPY_USER_AGENT,
     USER_AGENT,
 )
-from .enums import Location, LockState
+from .enums import Location, LockState, InsidePet
 from .exceptions import SurePetcareAuthenticationError, SurePetcareConnectionError, SurePetcareError
 
 
@@ -429,12 +429,12 @@ class SureAPIClient:
         if response := await self.call(method="DELETE", resource=resource):
             return response
         
-    async def set_inside_pet(self, device_id: int, tag_id: int, profile_id: int) -> dict[str, Any] | None:
+    async def set_inside_pet(self, device_id: int, tag_id: int, profile_id: InsidePet) -> dict[str, Any] | None:
         """Set a pet as inside only or outside"""
         resource = DEVICE_TAG_RESOURCE.format(
             BASE_RESOURCE=BASE_RESOURCE, device_id=device_id, tag_id=tag_id
         )
-        data = {"profile": profile_id}
+        data = {"profile": int(profile_id.value)}
     
         if (
             response := await self.call(

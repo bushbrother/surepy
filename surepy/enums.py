@@ -76,3 +76,9 @@ class TimelineEvent(SureEnum):
     DRINK = 29
     REMINDER_FRESH_WATER = 32
     ANONYMOUS_DRINK = 34
+
+class InsidePet(SureEnum):
+    """Inside Pet Profiles"""
+
+    INSIDE_ONLY = 3
+    OUTSIDE = 2
