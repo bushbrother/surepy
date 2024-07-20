@@ -12,6 +12,7 @@ from datetime import datetime
 from typing import Any
 from urllib.parse import urlparse
 
+from surepy.client import get_inside_pet
 from surepy.entities import PetActivity, PetLocation, StateDrinking, StateFeeding, SurepyEntity, StateInside
 from surepy.entities.states import PetState
 from surepy.enums import EntityType, FoodType, Location, InsidePet
@@ -139,6 +140,6 @@ class Pet(SurepyEntity):
         """State of inside only."""
         # pylint: disable=no-member
         return StateInside(
-            profile = self._data.get("profile", {})
+            profile=InsidePet(get_inside_pet(tag_id := self._data.get("device_id",tag_id := self._data.get("tag_id"))))
         )
     
