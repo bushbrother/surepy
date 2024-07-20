@@ -12,9 +12,9 @@ from datetime import datetime
 from typing import Any
 from urllib.parse import urlparse
 
-from surepy.entities import PetActivity, PetLocation, StateDrinking, StateFeeding, SurepyEntity
+from surepy.entities import PetActivity, PetLocation, StateDrinking, StateFeeding, SurepyEntity, StateInside
 from surepy.entities.states import PetState
-from surepy.enums import EntityType, FoodType, Location
+from surepy.enums import EntityType, FoodType, Location, InsidePet
 
 
 class Pet(SurepyEntity):
@@ -133,3 +133,18 @@ class Pet(SurepyEntity):
     @property
     def last_drink(self) -> datetime | None:
         return self.drinking.at if self.drinking else None
+
+    @property
+    def inside_only(self) -> bool:
+        """State of inside only."""
+        return bool(self.profile_id.profile == InsidePet.INSIDE_ONLY)
+    
+    @property
+    def profile_id(self) -> StateInside:
+        """State of inside only."""
+        profile = self._data.get("profile", {})
+        # pylint: disable=no-member
+        return StateInside(
+            profile=StateInside(profile.get("profile", InsidePet.INSIDE_ONLY.value)),
+        )
+    
