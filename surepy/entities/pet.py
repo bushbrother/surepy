@@ -142,6 +142,6 @@ class Pet(SurepyEntity):
         tag_id = self._data.get("tag_id", {}),
         # pylint: disable=no-member
         return StateInside(
-            profile=InsidePet(get_inside_pet(tag_id := self._data.get("device_id",tag_id := self._data.get("tag_id"))))
+            profile=InsidePet(get_inside_pet(device_id,tag_id))
         )
     
